@@ -25,7 +25,7 @@ const _getHelpSuggestionsById = async (id) => {
   try {
     // for given id(a help):  get this ids' notes selfNotes - string
     let selfId = await _getHelpById(id);
-    console.log("==========selfId", selfId);
+    // console.log("==========selfId", selfId);
 
     // get all others active ids, their notes - othersNotes -  array of [id,notes] string,string
     let othersIds = await _getHelpByType(
@@ -35,7 +35,7 @@ const _getHelpSuggestionsById = async (id) => {
       selfId.owner,
       "false"
     );
-    console.log("othersIds DB===>", othersIds);
+    // console.log("othersIds DB===>", othersIds);
     if (!othersIds || othersIds.length === 0) {
       throw new AppError(`Can't find related helps for ${id}!!`, 404);
     }
@@ -70,7 +70,7 @@ const _getHelpByType = async (type, page, status, owner, self) => {
 };
 
 const _addNewHelp = async (body) => {
-  console.log(body);
+  // console.log(body);
   // if (!Object.keys(body).length > 0) {
   //   throw new AppError(
   //     "received no data, name and helptype are mandatory atleast",

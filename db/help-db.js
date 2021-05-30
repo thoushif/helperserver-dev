@@ -22,7 +22,7 @@ const getDBhelpsByIds = async (idList) => {
 
 //type, page, status
 const getDBhelpByType = async (helptype, page, status, owner, self) => {
-  console.log("=====type", helptype, page, status, owner);
+  // console.log("=====type", helptype, page, status, owner);
   const query = {};
   if (helptype) query.helptype = helptype;
   if (status) query.status = status;
@@ -36,7 +36,7 @@ const getDBhelpByType = async (helptype, page, status, owner, self) => {
 
   if (page) {
     if (helptype) query.helptype = helptype;
-    console.log("=====query paginate", query);
+    // console.log("=====query paginate", query);
     await models.Help.paginate(query, options).then((helps) => (data = helps));
   } else {
     if (helptype) query.helptype = { $ne: helptype };
@@ -67,7 +67,25 @@ const addNewDBHelp = async (body) => {
 
   return newHelp;
 };
+const editDBHelp = async (body) => {
+  const newHelp = new models.Help({
+    owner: body.owner,
+    name: body.name,
+    notes: body.notes,
+    helptype: body.type,
+    availableBy: body.availableBy,
+    progress: body.progress,
+    expires: body.expires
+  });
 
+  try {
+    await newHelp.save();
+  } catch (e) {
+    throw e;
+  }
+
+  return newHelp;
+};
 const deleteHelp = async (id) => {
   try {
     return await models.Help.findOneAndUpdate(

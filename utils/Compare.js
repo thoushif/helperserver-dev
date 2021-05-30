@@ -13,7 +13,7 @@ const getSuggestions = (selfNotes, othersNotes) => {
     }
   }
   suggestions.sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating));
-  console.log("---->Inside suggestion module", suggestions);
+  // console.log("---->Inside suggestion module", suggestions);
   return suggestions.map((suggestion) => suggestion.target.id).slice(0, 5);
 };
 
