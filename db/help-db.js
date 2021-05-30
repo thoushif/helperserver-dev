@@ -7,6 +7,19 @@ const getDBhelpById = async (id) => {
     throw e;
   }
 };
+
+const getDBhelpsByIds = async (idList) => {
+  const query = { _id: { $in: idList } };
+  const options = {
+    sort: "-createdAt"
+  };
+  try {
+    return await models.Help.paginate(query, options);
+  } catch (e) {
+    throw e;
+  }
+};
+
 //type, page, status
 const getDBhelpByType = async (helptype, page, status, owner, self) => {
   console.log("=====type", helptype, page, status, owner);
@@ -15,10 +28,22 @@ const getDBhelpByType = async (helptype, page, status, owner, self) => {
   if (status) query.status = status;
   if (owner) query.owner = owner;
   if (self && self === "false") query.owner = { $ne: owner };
-  console.log("=====query", query);
-
   let data;
-  await models.Help.paginate(query, { page }).then((helps) => (data = helps));
+  const options = {
+    page: page,
+    sort: "-createdAt"
+  };
+
+  if (page) {
+    if (helptype) query.helptype = helptype;
+    console.log("=====query paginate", query);
+    await models.Help.paginate(query, options).then((helps) => (data = helps));
+  } else {
+    if (helptype) query.helptype = { $ne: helptype };
+    await models.Help.find(query)
+      .sort("-createdAt")
+      .then((helps) => (data = helps));
+  }
   return data;
 };
 
@@ -58,6 +83,7 @@ const deleteHelp = async (id) => {
 module.exports = {
   getDBhelpById,
   getDBhelpByType,
+  getDBhelpsByIds,
   addNewDBHelp,
   deleteHelp
 };

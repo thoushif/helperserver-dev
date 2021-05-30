@@ -2,6 +2,7 @@
 const {
   _getHelpById,
   _getHelpByType,
+  _getHelpSuggestionsById,
   _addNewHelp,
   _deleteHelp
 } = require("../services/help.service");
@@ -59,6 +60,19 @@ const getHelpById = async (req, res, next) => {
   }
 };
 
+const getHelpSuggestions = async (req, res, next) => {
+  let helps;
+  try {
+    await _getHelpSuggestionsById(req.params.id).then((data) => (helps = data));
+    res.status(200).json({
+      status: "success",
+      data: { helps }
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
 const addNewHelp = async (req, res, next) => {
   let helps;
   try {
@@ -89,6 +103,7 @@ module.exports = {
   getAllHelps,
   getArchivedHelps,
   getHelpById,
+  getHelpSuggestions,
   addNewHelp,
   deleteHelp
 };

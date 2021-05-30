@@ -11,4 +11,6 @@ router.get("/:id", help.getHelpById);
 router.post("/add", help.addNewHelp);
 router.post("/delete", help.deleteHelp);
 
+router.get("/suggestions/:id", help.getHelpSuggestions);
+
 module.exports = router;
