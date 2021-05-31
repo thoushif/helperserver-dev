@@ -27,9 +27,6 @@ const getAllHelps = async (req, res, next) => {
   }
 };
 
-/*
- * call other imported services, or same service but different functions here if you need to
- */
 const getArchivedHelps = async (req, res, next) => {
   const { owner, helptype, page = 1, self } = req.query;
   let helps;

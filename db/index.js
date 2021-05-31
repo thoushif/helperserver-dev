@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const Help = require("./models/Help");
+const GiveLink = require("./models/GiveLink");
 
 const connectDb = async () => {
   return mongoose
@@ -12,7 +13,7 @@ const connectDb = async () => {
     .catch((err) => console.log(err));
 };
 
-const models = { Help };
+const models = { Help, GiveLink };
 
 module.exports = {
   connectDb,

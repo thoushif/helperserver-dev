@@ -12,8 +12,11 @@ const dbObject = require("./db");
 dbObject.connectDb();
 
 app.use(express.json());
-var helphelperAPI = require("./routes/help.js");
-app.use("/help", helphelperAPI);
+var helpAPI = require("./routes/help.js");
+app.use("/help", helpAPI);
+
+var linkAPI = require("./routes/link.js");
+app.use("/link", linkAPI);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!!`, 404));
