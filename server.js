@@ -10,6 +10,7 @@ morgan("tiny");
 
 const dbObject = require("./db");
 dbObject.connectDb();
+app.use(cors());
 
 app.use(express.json());
 // app.use(function(req, res, next) {
@@ -38,6 +39,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-const port = 5000;
+const port = process.env.port || 5000;
 
 app.listen(port, () => `Server running on port ${port}`);
