@@ -3,7 +3,7 @@ const cors = require("cors");
 const AppError = require("./utils/AppError");
 
 const app = express();
-app.use(cors());
+
 const morgan = require("morgan");
 app.use(morgan("dev"));
 morgan("tiny");
@@ -12,6 +12,7 @@ const dbObject = require("./db");
 dbObject.connectDb();
 
 app.use(express.json());
+app.use(cors());
 var helpAPI = require("./routes/help.js");
 app.use("/help", helpAPI);
 
