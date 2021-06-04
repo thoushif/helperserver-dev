@@ -6,7 +6,7 @@ const GiveLink = require("./models/GiveLink");
 const connectDb = async () => {
   return mongoose
     .connect(
-      "mongodb+srv://helphelper-dev:helphelper@cluster0.9dafc.mongodb.net/helphelper?retryWrites=true&w=majority",
+      process.env.MONGODB_URL,
       { useNewUrlParser: true, useUnifiedTopology: true }
     )
     .then(() => console.log("Database Connected"))
