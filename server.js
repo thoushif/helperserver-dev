@@ -3,7 +3,7 @@ const cors = require("cors");
 const AppError = require("./utils/AppError");
 
 const app = express();
-
+app.use(cors());
 const morgan = require("morgan");
 app.use(morgan("dev"));
 morgan("tiny");
