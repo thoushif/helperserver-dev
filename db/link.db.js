@@ -1,8 +1,15 @@
 const { models } = require("./index");
 
-const getDBLink = async () => {
+const getDBGiveLink = async () => {
   try {
     return await models.GiveLink.find();
+  } catch (e) {
+    throw e;
+  }
+};
+const getDBGiveLinkById = async (id) => {
+  try {
+    return await models.GiveLink.findById(id);
   } catch (e) {
     throw e;
   }
@@ -25,7 +32,57 @@ const addNewDBGiveLink = async (body) => {
   return newGiveLink;
 };
 
+const getDBAskLink = async () => {
+  try {
+    return await models.AskLink.find();
+  } catch (e) {
+    throw e;
+  }
+};
+const getDBAskLinkById = async (id) => {
+  try {
+    return await models.AskLink.findById(id);
+  } catch (e) {
+    throw e;
+  }
+};
+const checkDBLinkExists = async (linktype, itemId, userId) => {
+  try {
+    if (linktype === "ask") {
+      let query = { askingId: itemId, askingBy: userId };
+      return await models.AskLink.find(query);
+    } else {
+      let query = { givingId: itemId, givingBy: userId };
+      return await models.GiveLink.find(query);
+    }
+  } catch (e) {
+    throw e;
+  }
+};
+
+const addNewDBAskLink = async (body) => {
+  const newAskLink = new models.AskLink({
+    askingId: body.id,
+    askingBy: body.askingBy,
+    askingTo: body.askingTo,
+    askingStatus: "request"
+  });
+
+  try {
+    await newAskLink.save();
+  } catch (e) {
+    throw e;
+  }
+
+  return newAskLink;
+};
+
 module.exports = {
-  getDBLink,
-  addNewDBGiveLink
+  getDBGiveLink,
+  getDBGiveLinkById,
+  addNewDBGiveLink,
+  getDBAskLink,
+  getDBAskLinkById,
+  addNewDBAskLink,
+  checkDBLinkExists
 };
