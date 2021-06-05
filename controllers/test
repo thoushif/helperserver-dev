@@ -1,0 +1,32 @@
+
+const getDBAskLink = async () => {
+  try {
+    return await models.AskLink.find();
+  } catch (e) {
+    throw e;
+  }
+};
+const getDBAskLinkById = async (id) => {
+  try {
+    return await models.AskLink.findById(id);
+  } catch (e) {
+    throw e;
+  }
+};
+
+const addNewDBAskLink = async (body) => {
+  const newAskLink = new models.AskLink({
+    givingId: body.id,
+    givingBy: body.givingBy,
+    givingTo: body.givingTo,
+    givingStatus: "active"
+  });
+
+  try {
+    await newAskLink.save();
+  } catch (e) {
+    throw e;
+  }
+
+  return newAskLink;
+};
